@@ -42,8 +42,8 @@ We tested the following 2 settings:
 
 1. Clone the repository:
    ```bash
-    git clone https://github.com/yourusername/sp-ica.git
-    cd sp-ica
+    git clone https://github.com/anastaga/ica_sp.git
+    cd ica_sp
 
 2. Run the demo (use --cuda to run with GPU requires CUDA):
    ```bash
@@ -89,8 +89,6 @@ We tested the following 2 settings:
 
 
 ### Disclaimer
-This repository does not include or distribute the original SuperPoint code or its derivatives. Users must independently acquire the SuperPoint implementation and weights under the license terms provided by Magic Leap, Inc. 
+This repository does not include or distribute the original SuperPoint code. Users must independently acquire the SuperPoint implementation and weights under the license terms provided by Magic Leap, Inc. 
 
-The work presented here focuses on novel contributions, including the PRSI dataset, Illumination Conditions Adaptation (ICA) method, and evaluation processes. All dependencies, including SuperPoint, PySLAM, and other referenced works, are properly credited, and users are advised to comply with their respective licenses.
-
-
+The work presented here focuses on novel contributions, including the PRSI dataset, Illumination Conditions Adaptation (ICA) method, and evaluation processes. All dependencies, including SuperPoint, and other referenced works, are properly credited, and users are advised to comply with their respective licenses.
