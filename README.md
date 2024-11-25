@@ -14,20 +14,6 @@ Showcases the research and some of the methods developed in the following papers
  ![Demo Preview](assets/demo-results/output_ica.gif)
  ![Demo Preview](assets/demo-results/output_ica_2.gif)
 
-  
-  
-  
-
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-  - [Prerequisites](#prerequisites)
-  - [Steps](#steps)
-- [Usage](#usage)
-  - [Run the Demo](#run-the-demo)
-- [License](#license)
-
 
 ## Installation
 
