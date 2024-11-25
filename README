@@ -34,7 +34,7 @@ Showcases the research and some of the methods developed in the following papers
   - A novel technique leveraging day-time features as pseudo-ground truths for the training of night-time images.
 
 - **Custom Night-KITTI Variants:**
-  - Nighttime datasets generated using [img2img-turbo](https://github.com/GaParmar/img2img-turbo), LUTs, and OpenCV, including:
+  - Night-time datasets generated using [img2img-turbo](https://github.com/GaParmar/img2img-turbo), LUTs, and OpenCV, including:
     - `night-kitti00`
     - `night-kitti06`
     - `dark-night-kitti06`
@@ -65,5 +65,23 @@ We tested the following 2 settings:
 
 2. Run the demo (use --cuda to run with GPU requires CUDA):
    ```bash
-    python3 sp_inference.py assets/kitti06.mp4 --cuda   
-    python3 sp_inference.py assets/night-kitti06 --cuda 
+    python sp_inference.py assets/kitti06.mp4 --cuda   
+    python sp_inference.py assets/night-kitti06 --cuda 
+
+
+
+
+
+## Acknowledgements
+
+ - [MagicLeap](https://github.com/magicleap/SuperPointPretrainedNetwork)
+
+
+
+
+### Disclaimer
+This repository does not include or distribute the original SuperPoint code or its derivatives. Users must independently acquire the SuperPoint implementation and weights under the license terms provided by Magic Leap, Inc. 
+
+The work presented here focuses on novel contributions, including the PRSI dataset, Illumination Conditions Adaptation (ICA) method, and evaluation processes. All dependencies, including SuperPoint, PySLAM, and other referenced works, are properly credited, and users are advised to comply with their respective licenses.
+
+
