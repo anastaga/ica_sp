@@ -8,6 +8,15 @@ Showcases the research and some of the methods developed in the following papers
 
 - **Illumination Conditions Adaptation for Data-Driven Keypoint Detection under Extreme Lighting Variations**  
   DOI: [10.1109/IST59124.2023.10355736](https://doi.org/10.1109/IST59124.2023.10355736)
+  
+  
+  
+ ![Demo Preview](assets/demo-results/output_ica.gif)
+ ![Demo Preview](assets/demo-results/output_ica_2.gif)
+
+  
+  
+  
 
 ## Table of Contents
 

@@ -70,9 +70,9 @@ class SuperPointFrontend(object):
     self.cuda = cuda
     self.nms_dist = nms_dist
     self.conf_thresh = conf_thresh
-    self.nn_thresh = nn_thresh  # L2 descriptor distance for good match.
-    self.cell = 8  # Size of each output cell. Keep this fixed.
-    self.border_remove = 4  # Remove points this close to the border.
+    self.nn_thresh = nn_thresh  
+    self.cell = 8  
+    self.border_remove = 4  
 
     # Load the network in inference mode.
     self.net = SuperPointNet_pytorch()
@@ -343,49 +343,52 @@ class PointTracker:
 class VideoStreamer:
     """Class to handle video streams and image inputs."""
     
-    def __init__(self, source, cam_id=0, height=480, width=640, skip=1, img_glob='*.png'):
+    def __init__(self, source, cam_id=0, skip=1, img_glob='*.png'):
         self.source = source
-        self.height = height
-        self.width = width
         self.skip = skip
         self.current_frame = 0
         self.max_frames = float('inf')  # Default to an infinite stream.
         self.frame_list = None
         self.cap = None
+        self.height = None  # Dynamically determined later
+        self.width = None   # Dynamically determined later
 
-        if source == "camera":
-            print("==> Initializing webcam input.")
-            self.cap = cv2.VideoCapture(cam_id)
-            if not self.cap.isOpened():
-                raise IOError("Cannot access the webcam.")
-        elif os.path.isfile(source):  # Assume it's a video file.
+        if os.path.isfile(source):  # Assume it's a video file.
             print("==> Initializing video file input.")
             self.cap = cv2.VideoCapture(source)
             if not self.cap.isOpened():
                 raise IOError(f"Cannot open video file: {source}")
             self.max_frames = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)) // self.skip
+            self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         elif os.path.isdir(source):  # Assume it's a directory of images.
             print("==> Initializing image directory input.")
             self.frame_list = sorted(glob.glob(os.path.join(source, img_glob)))[::self.skip]
             if len(self.frame_list) == 0:
                 raise IOError(f"No images found in directory {source} with glob pattern {img_glob}")
             self.max_frames = len(self.frame_list)
+            # Read the first image to determine its dimensions
+            first_frame = cv2.imread(self.frame_list[0])
+            if first_frame is not None:
+                self.height, self.width = first_frame.shape[:2]
+            else:
+                raise IOError(f"Error reading first image in directory {source}.")
         else:
-            raise ValueError("Invalid input source. Must be 'camera', a video file, or an image directory.")
+            raise ValueError("Invalid input source. Must be a video file or an image directory.")
+
+        if not self.height or not self.width:
+            raise ValueError("Unable to determine input dimensions. Please check your input source.")
 
     def _resize_and_normalize(self, img):
-
-        img = cv2.resize(img, (self.width, self.height), interpolation=cv2.INTER_AREA)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = img.astype('float32') / 255.0
         return img
 
     def next_frame(self):
-
         if self.current_frame >= self.max_frames:
             return None, False
 
-        if self.cap:  # Handle webcam or video input.
+        if self.cap:  # Handle video input.
             ret, frame = self.cap.read()
             if not ret:
                 return None, False
@@ -413,80 +416,7 @@ class VideoStreamer:
         if self.cap:
             self.cap.release()
 
-# class double_conv(nn.Module):
-#     '''(conv => BN => ReLU) * 2'''
-#     def __init__(self, in_ch, out_ch):
-#         super(double_conv, self).__init__()
-#         self.conv = nn.Sequential(
-#             nn.Conv2d(in_ch, out_ch, 3, padding=1),
-#             nn.BatchNorm2d(out_ch),
-#             nn.ReLU(inplace=True),
-#             nn.Conv2d(out_ch, out_ch, 3, padding=1),
-#             nn.BatchNorm2d(out_ch),
-#             nn.ReLU(inplace=True)
-#         )
 
-#     def forward(self, x):
-#         x = self.conv(x)
-#         return x
-
-
-# class inconv(nn.Module):
-#     def __init__(self, in_ch, out_ch):
-#         super(inconv, self).__init__()
-#         self.conv = double_conv(in_ch, out_ch)
-
-#     def forward(self, x):
-#         x = self.conv(x)
-#         return x
-
-
-# class down(nn.Module):
-#     def __init__(self, in_ch, out_ch):
-#         super(down, self).__init__()
-#         self.mpconv = nn.Sequential(
-#             nn.MaxPool2d(2),
-#             double_conv(in_ch, out_ch)
-#         )
-
-#     def forward(self, x):
-#         x = self.mpconv(x)
-#         return x
-
-
-# class up(nn.Module):
-#     def __init__(self, in_ch, out_ch, bilinear=True):
-#         super(up, self).__init__()
-#         if bilinear:
-#             self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-#         else:
-#             self.up = nn.ConvTranspose2d(in_ch // 2, in_ch // 2, 2, stride=2)
-
-#         self.conv = double_conv(in_ch, out_ch)
-
-#     def forward(self, x1, x2):
-#         x1 = self.up(x1)
-
-#         # input is CHW
-#         diffY = x2.size()[2] - x1.size()[2]
-#         diffX = x2.size()[3] - x1.size()[3]
-
-#         x1 = F.pad(x1, (diffX // 2, diffX - diffX // 2,
-#                         diffY // 2, diffY - diffY // 2))
-
-#         x = torch.cat([x2, x1], dim=1)
-#         x = self.conv(x)
-#         return x
-
-
-# class outconv(nn.Module):
-#     def __init__(self, in_ch, out_ch):
-#         super(outconv, self).__init__()
-#         self.conv = nn.Conv2d(in_ch, out_ch, 1)
-
-#     def forward(self, x):
-#         x = self.conv(x)
-#         return x
 
 # Jet colormap for visualization.
 myjet = np.array([[0.        , 0.        , 0.5       ],
@@ -508,18 +438,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='PyTorch SuperPoint Demo.')
     parser.add_argument('input', type=str, default='',
                         help='Image directory or movie file or "camera" (for webcam).')
-    parser.add_argument('--weights_path', type=str, default='/weights/ica_weights_1.pth.tar',
-                        help='Path to pretrained weights file.')
+    parser.add_argument('--weights_path', type=str, default='weights/sp_ica_1.pth.tar',
+                    help='Path to weights file.')
     parser.add_argument('--img_glob', type=str, default='*.png',
                         help='Glob match if directory of images is specified (default: \'*.png\').')
     parser.add_argument('--skip', type=int, default=1,
                         help='Images to skip if input is movie or directory (default: 1).')
     parser.add_argument('--show_extra', action='store_true',
                         help='Show extra debug outputs (default: False).')
-    parser.add_argument('--H', type=int, default=480,
-                        help='Input image height (default: 480).')
-    parser.add_argument('--W', type=int, default=640,
-                        help='Input image width (default: 640).')
     parser.add_argument('--display_scale', type=int, default=3,
                         help='Factor to scale output visualization (default: 3).')
     parser.add_argument('--min_length', type=int, default=2,
@@ -530,14 +456,14 @@ if __name__ == '__main__':
                         help='Non Maximum Suppression (NMS) distance (default: 4).')
     parser.add_argument('--conf_thresh', type=float, default=0.010,
                         help='Detector confidence threshold (default: 0.010).')
-    parser.add_argument('--nn_thresh', type=float, default=0.7,
+    parser.add_argument('--nn_thresh', type=float, default=0.6,
                         help='Descriptor matching threshold (default: 0.7).')
     parser.add_argument('--camid', type=int, default=0,
                         help='OpenCV webcam video capture ID, usually 0 or 1 (default: 0).')
     parser.add_argument('--waitkey', type=int, default=1,
                         help='OpenCV waitkey time in ms (default: 1).')
     parser.add_argument('--cuda', action='store_true',
-                        help='Use CUDA GPU to speed up network processing speed (default: False)')
+                        help='Use CUDA')
     parser.add_argument('--no_display', action='store_true',
                         help='Do not display images to screen. Useful if running remotely (default: False).')
     parser.add_argument('--write', action='store_true',
@@ -548,7 +474,7 @@ if __name__ == '__main__':
     print(opt)
 
     # Initialize VideoStreamer to load input images.
-    vs = VideoStreamer(opt.input, cam_id=opt.camid, height=opt.H, width=opt.W, skip=opt.skip, img_glob=opt.img_glob)
+    vs = VideoStreamer(opt.input, cam_id=opt.camid, skip=opt.skip, img_glob=opt.img_glob)
 
     # Load the SuperPoint network.
     fe = SuperPointFrontend(weights_path=opt.weights_path,
