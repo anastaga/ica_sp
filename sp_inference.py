@@ -508,7 +508,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='PyTorch SuperPoint Demo.')
     parser.add_argument('input', type=str, default='',
                         help='Image directory or movie file or "camera" (for webcam).')
-    parser.add_argument('--weights_path', type=str, default='/home/anast/pytorch-superpoint/logs/sp__pretrained_then_phd_then_coco_8_May/checkpoints/superPointNet_420000_checkpoint.pth.tar',
+    parser.add_argument('--weights_path', type=str, default='/weights/ica_weights_1.pth.tar',
                         help='Path to pretrained weights file.')
     parser.add_argument('--img_glob', type=str, default='*.png',
                         help='Glob match if directory of images is specified (default: \'*.png\').')
