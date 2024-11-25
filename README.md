@@ -20,7 +20,7 @@ Showcases the research and some of the methods developed in the following papers
 ### Prerequisites
 We tested the following 2 settings: 
 - **Python** = 3.6 and 3.8
-- **PyTorch** =1.7.1 and 2.1.2+cu121
+- **PyTorch** =1.7.1 and 2.1.2
 - **OpenCV** =3.4.2 and 4.10
 - **CUDA** 11.0 and 12.1
 
