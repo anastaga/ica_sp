@@ -36,7 +36,6 @@ We tested the following 2 settings:
     python sp_inference.py assets/kitti06.mp4 --cuda   
     python sp_inference.py assets/night-kitti06 --cuda 
 
-
 ## Features
 
 - **PyTorch Implementation of Superpoint:** 
