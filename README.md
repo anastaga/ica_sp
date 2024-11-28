@@ -50,8 +50,6 @@ We tested the following 2 settings:
 <p align="center">
   <img src="/assets/img1_d.png" alt="" width="15%">
   <img src="/assets/img1_n.png" alt="" width="15%">
-</p>
-<p align="center">
   <img src="/assets/img2_d.png" alt="" width="15%">
   <img src="/assets/img2_n.png" alt="" width="15%">
 </p>
