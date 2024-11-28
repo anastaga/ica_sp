@@ -20,7 +20,6 @@ Showcases the research and some of the methods developed in the following papers
   
   
  ![Demo Preview](assets/demo-results/output_ica.gif)
- ![Demo Preview](assets/demo-results/output_ica_2.gif)
 
 
 ## Installation
