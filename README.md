@@ -19,13 +19,12 @@ Showcases the research and some of the methods developed in the following papers
   
   
  ![Demo Preview](assets/demo-results/output_ica.gif)
- 
-<div style="display: flex; justify-content: center; gap: 20px;">
-  <div style="text-align: center;">
-    <img src="/assets/merged.png" alt="Evaluation of the model trained with and without ICA" width="200">
-    <p>Evaluation of the trained models <strong>with</strong> ICA(left) and <strong>without</strong> ICA(right) ICA</p>
-  </div>
-</div>
+
+<p align="center">
+   <img src="/assets/merged.png" alt="Evaluation of the model trained with and without ICA" width="300">
+</p>
+<p align="center">Evaluation of the trained models <strong>with</strong> ICA (left) and <strong>without</strong> ICA (right) in the dark-night-kitti06 set using PySlam.</p>
+
 
 
 
