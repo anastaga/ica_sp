@@ -5,7 +5,6 @@ This repository provides an inference pipeline for a PyTorch implementation of t
  
 <p align="center">
   <img src="/assets/ica_method.png" alt="" width="50%">
-
 </p>
 
 
@@ -21,6 +20,10 @@ Showcases the research and some of the methods developed in the following papers
   
  ![Demo Preview](assets/demo-results/output_ica.gif)
 
+<p align="center">
+  <img src="/assets/vo_evaluation_dark-night-kitti06_ICA.png" alt="Evaluation of the model trained **with** ICA" width="45%">
+  <img src="/assets/vo_evaluation_dark-night-kitti06_No_ICA.png" alt="Evaluation of the model trained **without** ICA" width="45%">
+</p>
 
 ## Installation
 
