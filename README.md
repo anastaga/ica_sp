@@ -46,6 +46,17 @@ We tested the following 2 settings:
     
 - **Photo-Realistic Synthetic Illumination (PRSI) Dataset:**
   - Day-to-night dataset created using Unreal Engine 5, featuring diverse environments, controlled lighting transformations, and precise camera poses. Created to guide ICA's training.
+  - 
+<p align="center">
+  <img src="/assets/img1_d.png" alt="" width="45%">
+  <img src="/assets/img1_n.png" alt="" width="45%">
+</p>
+<p align="center">
+  <img src="/assets/img2_d.png" alt="" width="45%">
+  <img src="/assets/img2_n.png" alt="" width="45%">
+</p>
+
+
 
 - **Illumination Conditions Adaptation (ICA):**
   - A novel technique leveraging day-time features as pseudo-ground truths for the training of night-time images.
