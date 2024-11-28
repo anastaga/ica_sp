@@ -2,10 +2,8 @@
 
 This repository provides an inference pipeline for a PyTorch implementation of the SuperPoint network, enhanced with the **Illumination Conditions Adaptation (ICA)** method. 
 
-<p align="center">
-  <img src="/assets/ica_method.pdf" alt="" width="45%">
-</p>
-
+<iframe src="/assets/ica_method.pdf" width="100%" height="600px"> 
+</iframe>
 
 
 Showcases the research and some of the methods developed in the following papers:
