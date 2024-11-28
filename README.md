@@ -19,17 +19,14 @@ Showcases the research and some of the methods developed in the following papers
   
   
  ![Demo Preview](assets/demo-results/output_ica.gif)
+ 
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <div style="text-align: center;">
+    <img src="/assets/merged.png" alt="Evaluation of the model trained with and without ICA" width="200">
+    <p>Evaluation of the trained models <strong>with</strong> ICA(left) and <strong>without</strong> ICA(right) ICA</p>
+  </div>
+</div>
 
-<p align="center">
-  <figure style="display:inline-block; margin: 0 20px;">
-    <img src="/assets/vo_evaluation_dark-night-kitti06_ICA.png" alt="Evaluation of the model trained with ICA" width="25%">
-    <figcaption>Evaluation of the model trained <strong>with</strong> ICA</figcaption>
-  </figure>
-  <figure style="display:inline-block; margin: 0 20px;">
-    <img src="/assets/vo_evaluation_dark-night-kitti06_No_ICA.png" alt="Evaluation of the model trained without ICA" width="25%">
-    <figcaption>Evaluation of the model trained <strong>without</strong> ICA</figcaption>
-  </figure>
-</p>
 
 
 ## Installation
